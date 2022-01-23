@@ -10,15 +10,17 @@ import (
 	"go.uber.org/zap"
 )
 
+// Client represents the client for the OpenSea API.
 type Client struct {
 	apiKey      string
 	client      *http.Client
 	baseURL     *url.URL
 	limitAssets int
 	logger      *zap.SugaredLogger
-	rateLimitMs time.Duration
+	rateLimit   time.Duration
 }
 
+// NewClient creates a new OpenSea client with configuration.
 func NewClient(apiKey string) *Client {
 	return &Client{
 		apiKey:  apiKey,
@@ -28,10 +30,11 @@ func NewClient(apiKey string) *Client {
 		},
 		limitAssets: 50,
 		logger:      zap.NewExample().Sugar(),
-		rateLimitMs: time.Millisecond * 250,
+		rateLimit:   time.Millisecond * 250,
 	}
 }
 
+// NewRequest creates a new request and adds authentication headers.
 func (c *Client) NewRequest(method string, u *url.URL, body interface{}) (*http.Request, error) {
 	var (
 		err error

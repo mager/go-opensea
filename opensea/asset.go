@@ -6,6 +6,8 @@ import (
 	"net/url"
 )
 
+// Asset represents an asset on OpenSea.
+// https://docs.opensea.io/reference/asset-object
 type Asset struct {
 	AnimationOriginalURL    string             `json:"animation_original_url"`
 	AnimationURL            string             `json:"animation_url"`
@@ -121,6 +123,8 @@ type GetAssetsResponse struct {
 	Assets []Asset `json:"assets"`
 }
 
+// GetAssetsWithOffset gets a list of assets with an offset
+// https://docs.opensea.io/reference/getting-assets
 func (c *Client) GetAssetsWithOffset(owner string, offset int) ([]Asset, error) {
 	u, err := url.Parse(fmt.Sprintf("%s/api/v1/assets", c.baseURL))
 	if err != nil {
