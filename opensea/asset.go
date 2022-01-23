@@ -1,5 +1,11 @@
 package opensea
 
+import (
+	"encoding/json"
+	"fmt"
+	"net/url"
+)
+
 type Asset struct {
 	AnimationOriginalURL    string             `json:"animation_original_url"`
 	AnimationURL            string             `json:"animation_url"`
@@ -109,4 +115,79 @@ type AssetUser struct {
 
 type AssetDisplayData struct {
 	CardDisplayStyle string `json:"card_display_style"`
+}
+
+type GetAssetsResponse struct {
+	Assets []Asset `json:"assets"`
+}
+
+func (c *Client) GetAssetsWithOffset(owner string, offset int) ([]Asset, error) {
+	u, err := url.Parse(fmt.Sprintf("%s/api/v1/assets", c.baseURL))
+	if err != nil {
+		c.logger.Errorf("Error parsing url: %s", err)
+		return nil, err
+	}
+
+	q := u.Query()
+	q.Set("owner", owner)
+	q.Set("limit", fmt.Sprint(c.limitAssets))
+	q.Set("offset", fmt.Sprint(offset))
+	u.RawQuery = q.Encode()
+
+	req, err := c.NewRequest("GET", u, nil)
+	if err != nil {
+		c.logger.Errorf("Error creating request: %s", err)
+		return nil, err
+	}
+
+	resp, err := c.client.Do(req)
+	if err != nil {
+		c.logger.Errorf("Error sending request: %s", err)
+		return nil, err
+	}
+	defer resp.Body.Close()
+
+	var osResp GetAssetsResponse
+	err = json.NewDecoder(resp.Body).Decode(&osResp)
+	if err != nil {
+		c.logger.Errorf("Error decoding response: %s", err)
+		return nil, err
+	}
+
+	// TODO: Filter out assets with hidden collections
+	// var filtered = []Asset{}
+	// for _, asset := range osResp.Assets {
+	// 	if !asset.Collection.Hidden {
+	// 		filtered = append(filtered, asset)
+	// 	}
+	// }
+
+	return osResp.Assets, nil
+}
+
+// GetAssets returns the assets for an address
+func (c *Client) GetAssets(address string) ([]Asset, error) {
+	var (
+		allAssets []Asset
+		offset    = 0
+	)
+
+	for {
+		assets, err := c.GetAssetsWithOffset(address, offset)
+		if err != nil {
+			return allAssets, err
+		}
+
+		if len(assets) == 0 {
+			break
+		}
+
+		c.logger.Infow("Assets with offset", "address", address, "offset", offset)
+
+		allAssets = append(allAssets, assets...)
+		offset += c.limitAssets
+	}
+
+	c.logger.Infow("Total assets", "address", address, "offset", offset)
+	return allAssets, nil
 }
