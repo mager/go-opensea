@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/url"
+	"time"
 )
 
 // Asset represents an asset on OpenSea.
@@ -15,7 +16,7 @@ type Asset struct {
 	BackgroundColor         string             `json:"background_color"`
 	Collection              AssetCollection    `json:"collection"`
 	Creator                 AssetCreator       `json:"creator"`
-	Decimals                string             `json:"decimals"`
+	Decimals                int                `json:"decimals"`
 	Description             string             `json:"description"`
 	ExternalLink            string             `json:"external_link"`
 	ID                      int                `json:"id"`
@@ -24,19 +25,20 @@ type Asset struct {
 	ImageThumbnailURL       string             `json:"image_thumbnail_url"`
 	ImageURL                string             `json:"image_url"`
 	IsPresale               bool               `json:"is_presale"`
-	LastSale                string             `json:"last_sale"`
+	LastSale                AssetLastSale      `json:"last_sale"`
 	ListingDate             string             `json:"listing_date"`
 	Name                    string             `json:"name"`
 	NumSales                int                `json:"num_sales"`
 	Owner                   AssetOwner         `json:"owner"`
 	Permalink               string             `json:"permalink"`
-	SellOrders              string             `json:"sell_orders"`
+	SellOrders              interface{}        `json:"sell_orders"`
 	TokenID                 string             `json:"token_id"`
 	TokenMetadata           string             `json:"token_metadata"`
 	TopBid                  string             `json:"top_bid"`
-	Traits                  []string           `json:"traits"`
 	TransferFee             string             `json:"transfer_fee"`
 	TransferFeePaymentToken string             `json:"transfer_fee_payment_token"`
+	// TODO: Support traits
+	// Traits                  []string           `json:"traits"`
 }
 
 type AssetAssetContract struct {
@@ -119,34 +121,38 @@ type AssetDisplayData struct {
 	CardDisplayStyle string `json:"card_display_style"`
 }
 
+type AssetLastSale struct {
+	Asset AssetLastSaleAsset `json:"asset"`
+}
+
+type AssetLastSaleAsset struct {
+	TokenID  string `json:"token_id"`
+	Decimals int    `json:"decimals"`
+}
+
 type GetAssetsResponse struct {
 	Assets []Asset `json:"assets"`
 }
 
 // GetAssetsWithOffset gets a list of assets with an offset
 // https://docs.opensea.io/reference/getting-assets
-func (c *Client) GetAssetsWithOffset(owner string, offset int) ([]Asset, error) {
+func (c *OpenSeaClient) GetAssetsWithOffset(owner string, offset int) ([]Asset, error) {
 	u, err := url.Parse(fmt.Sprintf("%s/api/v1/assets", c.baseURL))
 	if err != nil {
-		c.logger.Errorf("Error parsing url: %s", err)
+		c.Log.Errorf("Error parsing url: %s", err)
 		return nil, err
 	}
 
+	// Set query params
 	q := u.Query()
 	q.Set("owner", owner)
 	q.Set("limit", fmt.Sprint(c.limitAssets))
 	q.Set("offset", fmt.Sprint(offset))
 	u.RawQuery = q.Encode()
 
-	req, err := c.NewRequest("GET", u, nil)
+	resp, err := c.Get(u)
 	if err != nil {
-		c.logger.Errorf("Error creating request: %s", err)
-		return nil, err
-	}
-
-	resp, err := c.client.Do(req)
-	if err != nil {
-		c.logger.Errorf("Error sending request: %s", err)
+		c.Log.Errorf("Error getting assets: %s", err)
 		return nil, err
 	}
 	defer resp.Body.Close()
@@ -154,7 +160,7 @@ func (c *Client) GetAssetsWithOffset(owner string, offset int) ([]Asset, error) 
 	var osResp GetAssetsResponse
 	err = json.NewDecoder(resp.Body).Decode(&osResp)
 	if err != nil {
-		c.logger.Errorf("Error decoding response: %s", err)
+		c.Log.Errorf("Error decoding response: %s", err)
 		return nil, err
 	}
 
@@ -170,10 +176,10 @@ func (c *Client) GetAssetsWithOffset(owner string, offset int) ([]Asset, error) 
 }
 
 // GetAssets returns the assets for an address
-func (c *Client) GetAssets(address string) ([]Asset, error) {
+func (c *OpenSeaClient) GetAssets(address string) ([]Asset, error) {
 	var (
 		allAssets []Asset
-		offset    = 0
+		offset    int
 	)
 
 	for {
@@ -186,12 +192,10 @@ func (c *Client) GetAssets(address string) ([]Asset, error) {
 			break
 		}
 
-		c.logger.Infow("Assets with offset", "address", address, "offset", offset)
-
 		allAssets = append(allAssets, assets...)
 		offset += c.limitAssets
+		time.Sleep(c.requestDelay)
 	}
 
-	c.logger.Infow("Total assets", "address", address, "offset", offset)
 	return allAssets, nil
 }

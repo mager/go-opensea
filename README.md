@@ -6,7 +6,19 @@ A Go client for the OpenSea API.
 
 ## Endpoints supported
 
-- [x] Get Assets
+### v1
+
+_https://docs.opensea.io/reference/api-overview_
+
+- [x] Retrieving assets (GetAssets)
+- [ ] Retrieving events (GetEvents)
+- [ ] Retrieving collections (GetCollections)
+- [ ] Retrieving bundles (GetBundles)
+- [ ] Retrieving a single asset (GetAsset)
+- [ ] Retrieving a single contract (GetContract)
+- [ ] Retrieving a single collection (GetCollection)
+- [ ] Retrieving collection stats (GetCollectionStats)
+
 
 ## Example usage
 
@@ -14,24 +26,24 @@ A Go client for the OpenSea API.
 package main
 
 import (
-	"fmt"
-
-	"github.com/mager/go-opensea"
+	"github.com/mager/go-opensea/opensea"
 )
 
 func main() {
 	// Create a new client
-	client := opensea.NewClient("YOUR_API_KEY")
+	client := opensea.NewOpenSeaClient("")
 
 	// Get all assets
-	assets, err := client.GetAssets("0x064DcA21b1377D1655AC3CA3e95282D9494E5611")
+	addy := "0x3b417FaeE9d2ff636701100891DC2755b5321Cc3" // Jay-Z's wallet address
+	assets, err := client.GetAssets(addy)
 	if err != nil {
 		// TODO: Handle error
 	}
 
 	// Print the assets
 	for _, asset := range assets {
-		fmt.Println(asset.Name)
+		client.Log.Info(asset.Name)
 	}
 }
 ```
+

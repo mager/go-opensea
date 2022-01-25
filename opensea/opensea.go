@@ -1,8 +1,6 @@
 package opensea
 
 import (
-	"bytes"
-	"encoding/json"
 	"net/http"
 	"net/url"
 	"time"
@@ -10,45 +8,42 @@ import (
 	"go.uber.org/zap"
 )
 
-// Client represents the client for the OpenSea API.
-type Client struct {
-	apiKey      string
-	client      *http.Client
-	baseURL     *url.URL
-	limitAssets int
-	logger      *zap.SugaredLogger
-	rateLimit   time.Duration
+// OpenSeaClient represents the client for the OpenSea API.
+type OpenSeaClient struct {
+	Log *zap.SugaredLogger
+
+	apiKey       string
+	client       *http.Client
+	baseURL      string
+	limitAssets  int
+	requestDelay time.Duration
 }
 
-// NewClient creates a new OpenSea client with configuration.
-func NewClient(apiKey string) *Client {
-	return &Client{
+// NewOpenSeaClient creates a new OpenSea client with configuration.
+func NewOpenSeaClient(apiKey string) *OpenSeaClient {
+	logger, err := zap.NewProduction()
+	if err != nil {
+		panic(err)
+	}
+
+	return &OpenSeaClient{
+		Log: logger.Sugar(),
+
 		apiKey:  apiKey,
-		baseURL: &url.URL{Scheme: "https", Host: "api.opensea.io", Path: "/"},
+		baseURL: "https://api.opensea.io",
 		client: &http.Client{
 			Timeout: time.Second * 10,
 		},
-		limitAssets: 50,
-		logger:      zap.NewExample().Sugar(),
-		rateLimit:   time.Millisecond * 250,
+		limitAssets:  50,
+		requestDelay: time.Millisecond * 250,
 	}
 }
 
 // NewRequest creates a new request and adds authentication headers.
-func (c *Client) NewRequest(method string, u *url.URL, body interface{}) (*http.Request, error) {
-	var (
-		err error
-		buf []byte
-	)
+func (c *OpenSeaClient) GetRequest(u *url.URL) (*http.Request, error) {
+	var err error
 
-	if body != nil {
-		buf, err = json.Marshal(body)
-		if err != nil {
-			return nil, err
-		}
-	}
-
-	req, err := http.NewRequest(method, u.String(), bytes.NewBuffer(buf))
+	req, err := http.NewRequest("GET", u.String(), nil)
 	if err != nil {
 		return nil, err
 	}
@@ -57,4 +52,14 @@ func (c *Client) NewRequest(method string, u *url.URL, body interface{}) (*http.
 	req.Header.Set("Content-Type", "application/json")
 
 	return req, nil
+}
+
+// Get does a GET request.
+func (c *OpenSeaClient) Get(u *url.URL) (*http.Response, error) {
+	req, err := c.GetRequest(u)
+	if err != nil {
+		return nil, err
+	}
+
+	return c.client.Do(req)
 }
