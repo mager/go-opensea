@@ -1,8 +1,10 @@
 package opensea
 
 import (
+	"io"
 	"net/http"
 	"net/http/httptest"
+	"os"
 	"reflect"
 	"testing"
 	"time"
@@ -25,12 +27,13 @@ func TestOpenSeaClient_GetAssetsWithOffset(t *testing.T) {
 		offset int
 	}
 	tests := []struct {
-		name    string
-		fields  fields
-		args    args
-		path    string
-		want    []Asset
-		wantErr bool
+		name        string
+		fields      fields
+		args        args
+		path        string
+		fixturePath string
+		want        []Asset
+		wantErr     bool
 	}{
 		{
 			name: "Get assets with offset",
@@ -46,12 +49,9 @@ func TestOpenSeaClient_GetAssetsWithOffset(t *testing.T) {
 				owner:  "0x3b417FaeE9d2ff636701100891DC2755b5321Cc3",
 				offset: 0,
 			},
-			path: "/api/v1/assets",
-			want: []Asset{
-				{
-					ID: 0,
-				},
-			},
+			path:        "/api/v1/assets",
+			fixturePath: "../testdata/get_assets.json",
+			want:        FixtureGetAssetsResp,
 		},
 	}
 	for _, tt := range tests {
@@ -64,8 +64,20 @@ func TestOpenSeaClient_GetAssetsWithOffset(t *testing.T) {
 					t.Errorf("Expected Content-Type: application/json header, got: %s", r.Header.Get("Accept"))
 				}
 				w.WriteHeader(http.StatusOK)
-				// TODO: Add JSON response
-				// w.Write([]byte(`{"value":"fixed"}`))
+
+				// Read the fixture
+				jsonFile, err := os.Open(tt.fixturePath)
+				if err != nil {
+					t.Errorf("Failed to open fixture file: %s", err)
+				}
+				defer jsonFile.Close()
+
+				// Write the fixture to the response
+				jsonFile.Seek(0, 0)
+				_, err = io.Copy(w, jsonFile)
+				if err != nil {
+					t.Errorf("Failed to write fixture to response: %s", err)
+				}
 			}))
 			defer server.Close()
 
