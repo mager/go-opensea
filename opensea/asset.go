@@ -136,11 +136,12 @@ type GetAssetsResponse struct {
 
 // GetAssetsWithOffset gets a list of assets with an offset
 // https://docs.opensea.io/reference/getting-assets
-func (c *OpenSeaClient) GetAssetsWithOffset(owner string, offset int) ([]Asset, error) {
+func (c *OpenSeaClient) GetAssetsWithOffset(owner string, offset int) (GetAssetsResponse, error) {
+	var osResp GetAssetsResponse
 	u, err := url.Parse(fmt.Sprintf("%s/api/v1/assets", c.baseURL))
 	if err != nil {
 		c.Log.Errorf("Error parsing url: %s", err)
-		return nil, err
+		return osResp, err
 	}
 
 	// Set query params
@@ -153,15 +154,14 @@ func (c *OpenSeaClient) GetAssetsWithOffset(owner string, offset int) ([]Asset, 
 	resp, err := c.Get(u)
 	if err != nil {
 		c.Log.Errorf("Error getting assets: %s", err)
-		return nil, err
+		return osResp, err
 	}
 	defer resp.Body.Close()
 
-	var osResp GetAssetsResponse
 	err = json.NewDecoder(resp.Body).Decode(&osResp)
 	if err != nil {
 		c.Log.Errorf("Error decoding response: %s", err)
-		return nil, err
+		return osResp, err
 	}
 
 	// TODO: Filter out assets with hidden collections
@@ -172,7 +172,7 @@ func (c *OpenSeaClient) GetAssetsWithOffset(owner string, offset int) ([]Asset, 
 	// 	}
 	// }
 
-	return osResp.Assets, nil
+	return osResp, nil
 }
 
 // GetAssets returns the assets for an address
@@ -183,16 +183,16 @@ func (c *OpenSeaClient) GetAssets(address string) ([]Asset, error) {
 	)
 
 	for {
-		assets, err := c.GetAssetsWithOffset(address, offset)
+		resp, err := c.GetAssetsWithOffset(address, offset)
 		if err != nil {
 			return allAssets, err
 		}
 
-		if len(assets) == 0 {
+		if len(resp.Assets) == 0 {
 			break
 		}
 
-		allAssets = append(allAssets, assets...)
+		allAssets = append(allAssets, resp.Assets...)
 		offset += c.limitAssets
 		time.Sleep(c.requestDelay)
 	}

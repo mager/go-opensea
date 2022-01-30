@@ -13,7 +13,7 @@ import (
 	"go.uber.org/zap/zaptest"
 )
 
-func TestOpenSeaClient_GetAssetsWithOffset(t *testing.T) {
+func TestOpenSeaClient_GetCollection(t *testing.T) {
 	type fields struct {
 		Log          *zap.SugaredLogger
 		apiKey       string
@@ -23,8 +23,7 @@ func TestOpenSeaClient_GetAssetsWithOffset(t *testing.T) {
 		requestDelay time.Duration
 	}
 	type args struct {
-		owner  string
-		offset int
+		slug string
 	}
 	tests := []struct {
 		name        string
@@ -32,11 +31,11 @@ func TestOpenSeaClient_GetAssetsWithOffset(t *testing.T) {
 		args        args
 		path        string
 		fixturePath string
-		want        GetAssetsResponse
+		want        Collection
 		wantErr     bool
 	}{
 		{
-			name: "Get assets with offset",
+			name: "Get collection",
 			fields: fields{
 				Log:          zaptest.NewLogger(t).Sugar(),
 				apiKey:       "",
@@ -46,12 +45,11 @@ func TestOpenSeaClient_GetAssetsWithOffset(t *testing.T) {
 				requestDelay: time.Millisecond * 250,
 			},
 			args: args{
-				owner:  "0x3b417FaeE9d2ff636701100891DC2755b5321Cc3",
-				offset: 0,
+				slug: "boredapeyachtclub",
 			},
-			path:        "/api/v1/assets",
-			fixturePath: "../testdata/get_assets.json",
-			want:        FixtureGetAssetsResp,
+			path:        "/api/v1/collection/boredapeyachtclub",
+			fixturePath: "../testdata/get_collection.json",
+			want:        FixtureGetCollectionResp,
 		},
 	}
 	for _, tt := range tests {
@@ -89,13 +87,13 @@ func TestOpenSeaClient_GetAssetsWithOffset(t *testing.T) {
 				limitAssets:  tt.fields.limitAssets,
 				requestDelay: tt.fields.requestDelay,
 			}
-			got, err := c.GetAssetsWithOffset(tt.args.owner, tt.args.offset)
+			got, err := c.GetCollection(tt.args.slug)
 			if (err != nil) != tt.wantErr {
-				t.Errorf("OpenSeaClient.GetAssetsWithOffset() error = %v, wantErr %v", err, tt.wantErr)
+				t.Errorf("OpenSeaClient.GetCollection() error = %v, wantErr %v", err, tt.wantErr)
 				return
 			}
 			if !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("OpenSeaClient.GetAssetsWithOffset() = %v, want %v", got, tt.want)
+				t.Errorf("OpenSeaClient.GetCollection() = %v, want %v", got, tt.want)
 			}
 		})
 	}

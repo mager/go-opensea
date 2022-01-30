@@ -16,7 +16,7 @@ _https://docs.opensea.io/reference/api-overview_
 - [ ] Retrieving bundles (GetBundles)
 - [ ] Retrieving a single asset (GetAsset)
 - [ ] Retrieving a single contract (GetContract)
-- [ ] Retrieving a single collection (GetCollection)
+- [x] Retrieving a single collection (GetCollection)
 - [ ] Retrieving collection stats (GetCollectionStats)
 
 
