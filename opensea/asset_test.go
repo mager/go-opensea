@@ -90,6 +90,8 @@ func TestOpenSeaClient_GetAssetsWithOffset(t *testing.T) {
 				requestDelay: tt.fields.requestDelay,
 			}
 			got, err := c.GetAssetsWithOffset(tt.args.owner, tt.args.offset)
+			// Print full struct
+			// fmt.Printf("%#v\n", got)
 			if (err != nil) != tt.wantErr {
 				t.Errorf("OpenSeaClient.GetAssetsWithOffset() error = %v, wantErr %v", err, tt.wantErr)
 				return

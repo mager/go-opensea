@@ -132,7 +132,7 @@ type AssetLastSaleAsset struct {
 type AssetTrait struct {
 	TraitCount int    `json:"trait_count"`
 	TraitType  string `json:"trait_type"`
-	// Value      string `json:"value"`
+	Value      string `json:"value"`
 }
 
 type GetAssetsResponse struct {
