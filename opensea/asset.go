@@ -37,8 +37,7 @@ type Asset struct {
 	TopBid                  string             `json:"top_bid"`
 	TransferFee             string             `json:"transfer_fee"`
 	TransferFeePaymentToken string             `json:"transfer_fee_payment_token"`
-	// TODO: Support traits
-	// Traits                  []string           `json:"traits"`
+	Traits                  []AssetTrait       `json:"traits"`
 }
 
 type AssetAssetContract struct {
@@ -128,6 +127,12 @@ type AssetLastSale struct {
 type AssetLastSaleAsset struct {
 	TokenID  string `json:"token_id"`
 	Decimals int    `json:"decimals"`
+}
+
+type AssetTrait struct {
+	TraitCount int    `json:"trait_count"`
+	TraitType  string `json:"trait_type"`
+	// Value      string `json:"value"`
 }
 
 type GetAssetsResponse struct {
