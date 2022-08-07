@@ -3,7 +3,7 @@ package opensea
 var (
 	FixtureGetAssetsResp = GetAssetsResponse{
 		Assets: []Asset{
-			Asset{
+			{
 				AnimationOriginalURL: "",
 				AnimationURL:         "",
 				AssetContract: AssetAssetContract{
@@ -107,7 +107,7 @@ var (
 				TransferFee:             "",
 				TransferFeePaymentToken: "",
 			},
-			Asset{
+			{
 				AnimationOriginalURL: "",
 				AnimationURL:         "",
 				AssetContract: AssetAssetContract{
@@ -203,15 +203,27 @@ var (
 						Username: "NullAddress",
 					},
 				},
-				Permalink:               "https://opensea.io/assets/0x495f947276749ce646f68ac8c248420045cb7b5e/70372427421690915951028887770702625142377674070018570432223787563992181899265",
-				SellOrders:              nil,
-				TokenID:                 "70372427421690915951028887770702625142377674070018570432223787563992181899265",
-				TokenMetadata:           "",
-				TopBid:                  "",
+				Permalink:     "https://opensea.io/assets/0x495f947276749ce646f68ac8c248420045cb7b5e/70372427421690915951028887770702625142377674070018570432223787563992181899265",
+				SellOrders:    nil,
+				TokenID:       "70372427421690915951028887770702625142377674070018570432223787563992181899265",
+				TokenMetadata: "",
+				TopBid:        "",
+				Traits: []AssetTrait{
+					{
+						TraitCount: 1,
+						TraitType:  "hair",
+						Value:      "brown",
+					},
+					{
+						TraitCount: 1,
+						TraitType:  "eye",
+						Value:      "blue",
+					},
+				},
 				TransferFee:             "",
 				TransferFeePaymentToken: "",
 			},
-			Asset{
+			{
 				AnimationOriginalURL: "",
 				AnimationURL:         "",
 				AssetContract: AssetAssetContract{
@@ -315,7 +327,7 @@ var (
 				TransferFee:             "",
 				TransferFeePaymentToken: "",
 			},
-			Asset{
+			{
 				AnimationOriginalURL: "",
 				AnimationURL:         "",
 				AssetContract: AssetAssetContract{
@@ -419,7 +431,7 @@ var (
 				TransferFee:             "",
 				TransferFeePaymentToken: "",
 			},
-			Asset{
+			{
 				AnimationOriginalURL: "",
 				AnimationURL:         "",
 				AssetContract: AssetAssetContract{
@@ -523,7 +535,7 @@ var (
 				TransferFee:             "",
 				TransferFeePaymentToken: "",
 			},
-			Asset{
+			{
 				AnimationOriginalURL: "",
 				AnimationURL:         "",
 				AssetContract: AssetAssetContract{
@@ -627,7 +639,7 @@ var (
 				TransferFee:             "",
 				TransferFeePaymentToken: "",
 			},
-			Asset{
+			{
 				AnimationOriginalURL: "https://storage.opensea.io/files/38cbd7d96950dd012dfdcf327aec4b01.mp4",
 				AnimationURL:         "https://storage.opensea.io/files/38cbd7d96950dd012dfdcf327aec4b01.mp4",
 				AssetContract: AssetAssetContract{
@@ -807,7 +819,7 @@ var (
 				TransferFee:             "",
 				TransferFeePaymentToken: "",
 			},
-			Asset{
+			{
 				AnimationOriginalURL: "",
 				AnimationURL:         "",
 				AssetContract: AssetAssetContract{
@@ -911,7 +923,7 @@ var (
 				TransferFee:             "",
 				TransferFeePaymentToken: "",
 			},
-			Asset{
+			{
 				AnimationOriginalURL: "",
 				AnimationURL:         "",
 				AssetContract: AssetAssetContract{
@@ -1015,7 +1027,7 @@ var (
 				TransferFee:             "",
 				TransferFeePaymentToken: "",
 			},
-			Asset{
+			{
 				AnimationOriginalURL: "https://storage.opensea.io/files/28a0dbe33e92e70fa73f9a71282dd87d.mp4",
 				AnimationURL:         "https://storage.opensea.io/files/28a0dbe33e92e70fa73f9a71282dd87d.mp4",
 				AssetContract: AssetAssetContract{
@@ -1119,7 +1131,7 @@ var (
 				TransferFee:             "",
 				TransferFeePaymentToken: "",
 			},
-			Asset{
+			{
 				AnimationOriginalURL: "",
 				AnimationURL:         "",
 				AssetContract: AssetAssetContract{
@@ -1223,7 +1235,7 @@ var (
 				TransferFee:             "",
 				TransferFeePaymentToken: "",
 			},
-			Asset{
+			{
 				AnimationOriginalURL: "",
 				AnimationURL:         "",
 				AssetContract: AssetAssetContract{
@@ -1327,7 +1339,7 @@ var (
 				TransferFee:             "",
 				TransferFeePaymentToken: "",
 			},
-			Asset{
+			{
 				AnimationOriginalURL: "",
 				AnimationURL:         "",
 				AssetContract: AssetAssetContract{
@@ -1431,7 +1443,7 @@ var (
 				TransferFee:             "",
 				TransferFeePaymentToken: "",
 			},
-			Asset{
+			{
 				AnimationOriginalURL: "",
 				AnimationURL:         "",
 				AssetContract: AssetAssetContract{
@@ -1535,7 +1547,7 @@ var (
 				TransferFee:             "",
 				TransferFeePaymentToken: "",
 			},
-			Asset{
+			{
 				AnimationOriginalURL: "",
 				AnimationURL:         "",
 				AssetContract: AssetAssetContract{
@@ -1639,7 +1651,7 @@ var (
 				TransferFee:             "",
 				TransferFeePaymentToken: "",
 			},
-			Asset{
+			{
 				AnimationOriginalURL: "",
 				AnimationURL:         "",
 				AssetContract: AssetAssetContract{
@@ -1743,7 +1755,7 @@ var (
 				TransferFee:             "",
 				TransferFeePaymentToken: "",
 			},
-			Asset{
+			{
 				AnimationOriginalURL: "https://storage.opensea.io/files/9be7737794947c03497a9d2aba3c2da6.mp4",
 				AnimationURL:         "https://storage.opensea.io/files/9be7737794947c03497a9d2aba3c2da6.mp4",
 				AssetContract: AssetAssetContract{
@@ -1847,7 +1859,7 @@ var (
 				TransferFee:             "",
 				TransferFeePaymentToken: "",
 			},
-			Asset{
+			{
 				AnimationOriginalURL: "",
 				AnimationURL:         "",
 				AssetContract: AssetAssetContract{
@@ -1951,7 +1963,7 @@ var (
 				TransferFee:             "",
 				TransferFeePaymentToken: "",
 			},
-			Asset{
+			{
 				AnimationOriginalURL: "",
 				AnimationURL:         "",
 				AssetContract: AssetAssetContract{
@@ -2055,7 +2067,7 @@ var (
 				TransferFee:             "",
 				TransferFeePaymentToken: "",
 			},
-			Asset{
+			{
 				AnimationOriginalURL: "",
 				AnimationURL:         "",
 				AssetContract: AssetAssetContract{
@@ -2159,7 +2171,7 @@ var (
 				TransferFee:             "",
 				TransferFeePaymentToken: "",
 			},
-			Asset{
+			{
 				AnimationOriginalURL: "",
 				AnimationURL:         "",
 				AssetContract: AssetAssetContract{
@@ -2263,7 +2275,7 @@ var (
 				TransferFee:             "",
 				TransferFeePaymentToken: "",
 			},
-			Asset{
+			{
 				AnimationOriginalURL: "https://ipfs.io/ipfs/QmPDd994RTF3MduJv77La2CXKEnK98depvEqWGEswbJgsf/animation.mp4",
 				AnimationURL:         "https://storage.opensea.io/files/3865c195f3ab904e60670b516eb9a0ec.mp4",
 				AssetContract: AssetAssetContract{
@@ -2443,7 +2455,7 @@ var (
 				TransferFee:             "",
 				TransferFeePaymentToken: "",
 			},
-			Asset{
+			{
 				AnimationOriginalURL: "https://ipfs.io/ipfs/QmRJitUM4CvfaGugGqMDyeQZWbrcexmspDteToSekiydbF/animation.mp4",
 				AnimationURL:         "https://storage.opensea.io/files/55d8513bee819d93764ede0487cb6f82.mp4",
 				AssetContract: AssetAssetContract{
@@ -2623,7 +2635,7 @@ var (
 				TransferFee:             "",
 				TransferFeePaymentToken: "",
 			},
-			Asset{
+			{
 				AnimationOriginalURL: "",
 				AnimationURL:         "",
 				AssetContract: AssetAssetContract{
@@ -2727,7 +2739,7 @@ var (
 				TransferFee:             "",
 				TransferFeePaymentToken: "",
 			},
-			Asset{
+			{
 				AnimationOriginalURL: "",
 				AnimationURL:         "",
 				AssetContract: AssetAssetContract{
@@ -2831,7 +2843,7 @@ var (
 				TransferFee:             "",
 				TransferFeePaymentToken: "",
 			},
-			Asset{
+			{
 				AnimationOriginalURL: "",
 				AnimationURL:         "",
 				AssetContract: AssetAssetContract{
@@ -2935,7 +2947,7 @@ var (
 				TransferFee:             "",
 				TransferFeePaymentToken: "",
 			},
-			Asset{
+			{
 				AnimationOriginalURL: "",
 				AnimationURL:         "",
 				AssetContract: AssetAssetContract{
@@ -3039,7 +3051,7 @@ var (
 				TransferFee:             "",
 				TransferFeePaymentToken: "",
 			},
-			Asset{
+			{
 				AnimationOriginalURL: "",
 				AnimationURL:         "",
 				AssetContract: AssetAssetContract{
@@ -3143,7 +3155,7 @@ var (
 				TransferFee:             "",
 				TransferFeePaymentToken: "",
 			},
-			Asset{
+			{
 				AnimationOriginalURL: "",
 				AnimationURL:         "",
 				AssetContract: AssetAssetContract{
@@ -3247,7 +3259,7 @@ var (
 				TransferFee:             "",
 				TransferFeePaymentToken: "",
 			},
-			Asset{
+			{
 				AnimationOriginalURL: "",
 				AnimationURL:         "",
 				AssetContract: AssetAssetContract{
@@ -3351,7 +3363,7 @@ var (
 				TransferFee:             "",
 				TransferFeePaymentToken: "",
 			},
-			Asset{
+			{
 				AnimationOriginalURL: "",
 				AnimationURL:         "",
 				AssetContract: AssetAssetContract{
@@ -3531,7 +3543,7 @@ var (
 				TransferFee:             "",
 				TransferFeePaymentToken: "",
 			},
-			Asset{
+			{
 				AnimationOriginalURL: "https://storage.opensea.io/files/315f3a7555ddf01280e451fb76ba628c.mp4",
 				AnimationURL:         "https://storage.opensea.io/files/315f3a7555ddf01280e451fb76ba628c.mp4",
 				AssetContract: AssetAssetContract{
@@ -3635,7 +3647,7 @@ var (
 				TransferFee:             "",
 				TransferFeePaymentToken: "",
 			},
-			Asset{
+			{
 				AnimationOriginalURL: "",
 				AnimationURL:         "",
 				AssetContract: AssetAssetContract{
@@ -3739,7 +3751,7 @@ var (
 				TransferFee:             "",
 				TransferFeePaymentToken: "",
 			},
-			Asset{
+			{
 				AnimationOriginalURL: "https://storage.opensea.io/files/78ed25d244f29b13fe925bb7daefffcc.mp4",
 				AnimationURL:         "https://storage.opensea.io/files/78ed25d244f29b13fe925bb7daefffcc.mp4",
 				AssetContract: AssetAssetContract{
@@ -3843,7 +3855,7 @@ var (
 				TransferFee:             "",
 				TransferFeePaymentToken: "",
 			},
-			Asset{
+			{
 				AnimationOriginalURL: "https://ipfs.io/ipfs/QmeZGL52va4ZbRPjMuqVTjGAAJ4hPEtYWfnboLS3aNhjBx/animation.mpga",
 				AnimationURL:         "https://storage.opensea.io/files/747ec6659ad0a6a80e47046210f959ec.mp3",
 				AssetContract: AssetAssetContract{
@@ -3947,7 +3959,7 @@ var (
 				TransferFee:             "",
 				TransferFeePaymentToken: "",
 			},
-			Asset{
+			{
 				AnimationOriginalURL: "",
 				AnimationURL:         "",
 				AssetContract: AssetAssetContract{
@@ -4051,7 +4063,7 @@ var (
 				TransferFee:             "",
 				TransferFeePaymentToken: "",
 			},
-			Asset{
+			{
 				AnimationOriginalURL: "https://ipfs.io/ipfs/QmaFPkRbfRqCWoTKhM63oxFksngW4daQDgq3Gxhq9qA93Y/animation.mpga",
 				AnimationURL:         "https://storage.opensea.io/files/747ec6659ad0a6a80e47046210f959ec.mp3",
 				AssetContract: AssetAssetContract{
@@ -4155,7 +4167,7 @@ var (
 				TransferFee:             "",
 				TransferFeePaymentToken: "",
 			},
-			Asset{
+			{
 				AnimationOriginalURL: "https://storage.opensea.io/files/b694a7d82294c59eccbcbae3b2513d72.mp4",
 				AnimationURL:         "https://storage.opensea.io/files/b694a7d82294c59eccbcbae3b2513d72.mp4",
 				AssetContract: AssetAssetContract{
@@ -4259,7 +4271,7 @@ var (
 				TransferFee:             "",
 				TransferFeePaymentToken: "",
 			},
-			Asset{
+			{
 				AnimationOriginalURL: "",
 				AnimationURL:         "",
 				AssetContract: AssetAssetContract{
@@ -4363,7 +4375,7 @@ var (
 				TransferFee:             "",
 				TransferFeePaymentToken: "",
 			},
-			Asset{
+			{
 				AnimationOriginalURL: "",
 				AnimationURL:         "",
 				AssetContract: AssetAssetContract{
@@ -4543,7 +4555,7 @@ var (
 				TransferFee:             "",
 				TransferFeePaymentToken: "",
 			},
-			Asset{
+			{
 				AnimationOriginalURL: "",
 				AnimationURL:         "",
 				AssetContract: AssetAssetContract{
@@ -4647,7 +4659,7 @@ var (
 				TransferFee:             "",
 				TransferFeePaymentToken: "",
 			},
-			Asset{
+			{
 				AnimationOriginalURL: "",
 				AnimationURL:         "",
 				AssetContract: AssetAssetContract{
@@ -4751,7 +4763,7 @@ var (
 				TransferFee:             "",
 				TransferFeePaymentToken: "",
 			},
-			Asset{
+			{
 				AnimationOriginalURL: "",
 				AnimationURL:         "",
 				AssetContract: AssetAssetContract{
@@ -4855,7 +4867,7 @@ var (
 				TransferFee:             "",
 				TransferFeePaymentToken: "",
 			},
-			Asset{
+			{
 				AnimationOriginalURL: "",
 				AnimationURL:         "",
 				AssetContract: AssetAssetContract{
@@ -5035,7 +5047,7 @@ var (
 				TransferFee:             "",
 				TransferFeePaymentToken: "",
 			},
-			Asset{
+			{
 				AnimationOriginalURL: "",
 				AnimationURL:         "",
 				AssetContract: AssetAssetContract{
@@ -5139,7 +5151,7 @@ var (
 				TransferFee:             "",
 				TransferFeePaymentToken: "",
 			},
-			Asset{
+			{
 				AnimationOriginalURL: "https://storage.opensea.io/files/40ccd2f213a1319ec0dfe1a4e2105548.mp4",
 				AnimationURL:         "https://storage.opensea.io/files/40ccd2f213a1319ec0dfe1a4e2105548.mp4",
 				AssetContract: AssetAssetContract{
@@ -5243,7 +5255,7 @@ var (
 				TransferFee:             "",
 				TransferFeePaymentToken: "",
 			},
-			Asset{
+			{
 				AnimationOriginalURL: "https://storage.opensea.io/files/f614777ce75ba98555aadff3c9b4bc72.mp4",
 				AnimationURL:         "https://storage.opensea.io/files/f614777ce75ba98555aadff3c9b4bc72.mp4",
 				AssetContract: AssetAssetContract{
@@ -5347,7 +5359,7 @@ var (
 				TransferFee:             "",
 				TransferFeePaymentToken: "",
 			},
-			Asset{
+			{
 				AnimationOriginalURL: "",
 				AnimationURL:         "",
 				AssetContract: AssetAssetContract{
@@ -5451,7 +5463,7 @@ var (
 				TransferFee:             "",
 				TransferFeePaymentToken: "",
 			},
-			Asset{
+			{
 				AnimationOriginalURL: "",
 				AnimationURL:         "",
 				AssetContract: AssetAssetContract{
@@ -5555,7 +5567,7 @@ var (
 				TransferFee:             "",
 				TransferFeePaymentToken: "",
 			},
-			Asset{
+			{
 				AnimationOriginalURL: "https://storage.opensea.io/files/d16f9bd79e0c7d997993c1eec5992d58.mp4",
 				AnimationURL:         "https://storage.opensea.io/files/d16f9bd79e0c7d997993c1eec5992d58.mp4",
 				AssetContract: AssetAssetContract{
